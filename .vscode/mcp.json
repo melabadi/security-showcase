@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/github/github-mcp-server/main/schemas/mcp.schema.json",
+  "servers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "description": "Hosted GitHub MCP. Authenticated automatically via your VS Code GitHub / Copilot sign-in — no PAT required. Reads code scanning, Dependabot, secret scanning, branch protection; opens issues and PRs."
+    },
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp",
+      "description": "Hosted Microsoft Learn MCP. No auth. Authoritative Microsoft security guidance, runbooks, Zero Trust patterns, Azure Policy + Defender docs."
+    },
+    "deepwiki": {
+      "type": "http",
+      "url": "https://mcp.deepwiki.com/mcp",
+      "description": "Hosted DeepWiki MCP (Cognition). No auth. Repo-level knowledge base over public GitHub repos — use to pull CodeQL / Semgrep / Trivy / Snyk rules documentation and the GitHub Advisory DB by asking about their repos."
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "description": "Hosted Context7 MCP (Upstash). No auth for public libraries. Up-to-date library / framework documentation — lets the agent look up the correct secure-API for React, Express, jsonwebtoken, lodash, axios, etc."
+    },
+    "owasp-cheatsheets": {
+      "type": "http",
+      "url": "https://gitmcp.io/OWASP/CheatSheetSeries",
+      "description": "Hosted gitmcp.io proxy over the OWASP Cheat Sheet Series repo. No auth. Security knowledge base covering XSS, SQLi, JWT, CORS, authN/Z, secrets management, input validation, supply chain — the orchestrator cites these cheat sheets when proposing remediations."
+    },
+    "github-advisories": {
+      "type": "http",
+      "url": "https://gitmcp.io/github/advisory-database",
+      "description": "Hosted gitmcp.io proxy over the GitHub Advisory Database. No auth. Deterministic CVE / GHSA lookup — the orchestrator queries this to attach real advisory IDs and fixed-version ranges to Dependabot findings instead of inventing them."
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest", "--isolated"],
+      "description": "Microsoft Playwright MCP. Runs locally via npx. Drives a real browser so the red-team agent can perform authenticated intrusion tests (XSS payloads, IDOR probes, prototype-pollution URLs, auth bypass) against the running demo app at http://localhost:5173. --isolated keeps state ephemeral; --headless avoids flashing a window on stage."
+    }
+  }
+}

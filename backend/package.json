@@ -1,0 +1,21 @@
+{
+  "name": "vulnerable-backend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Intentionally vulnerable Node/Express mock backend. DO NOT DEPLOY.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "cors": "2.8.5",
+    "cookie-parser": "1.4.5",
+    "jsonwebtoken": "8.5.1",
+    "sqlite3": "5.0.2",
+    "body-parser": "1.19.0",
+    "lodash": "4.17.20",
+    "axios": "0.21.1",
+    "node-fetch": "2.6.1"
+  }
+}

@@ -1,0 +1,22 @@
+node_modules/
+dist/
+build/
+.vite/
+coverage/
+
+# demo artifacts
+reports/
+.playwright-mcp/
+
+# never commit real envs
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editor
+.idea/
+*.swp
