@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "0.21.1",
+    "axios": "1.15.2",
     "lodash": "4.17.20",
     "marked": "0.3.6",
     "react": "18.2.0",
