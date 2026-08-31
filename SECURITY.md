@@ -1,44 +1,66 @@
-# Security & demo checklist
+# Security Policy
 
-This repository is **intentionally vulnerable** and exists solely to power
-the GHCP + GHE Security Architecture presentation. Treat every file as
-untrusted.
+This repository is intentionally vulnerable and exists only for the GHCP and GHE
+Security Architecture demonstration. Never deploy the applications in `frontend/` or
+`backend/`, and treat all repository content as untrusted.
 
-## Pre-demo checklist (run once)
+## Reporting A Vulnerability
 
-In **Settings → Code security and analysis**, confirm:
+Do not open a public issue for a suspected vulnerability or exposed credential.
 
-- [ ] **CodeQL analysis** — enabled (default setup disabled, advanced via `.github/workflows/codeql.yml`)
-- [ ] **Dependency graph** — enabled
-- [ ] **Dependabot alerts** — enabled
-- [ ] **Dependabot security updates** — enabled
-- [ ] **Secret scanning** — enabled
-- [ ] **Push protection** — enabled
-- [ ] **Validity checks** — enabled
-- [ ] **Non-provider patterns** — enabled
-- [ ] Custom secret-scanning patterns from `.github/secret_scanning.yml` registered in the org / repo UI
+Report privately through [GitHub private vulnerability reporting](https://github.com/melabadi/security-showcase/security/advisories/new).
+If private reporting is unavailable, contact `@melabadi` through an existing trusted
+private channel. Do not include active credentials, personal data, or exploit material
+in a public message.
 
-In **Settings → Branches → main**, confirm branch protection:
+Include affected revisions, safe reproduction steps, impact, and a minimal proof of
+concept. Reports about the deliberate findings in the demo applications are useful only
+when they identify an undocumented impact or a failure in the surrounding containment.
 
-- [ ] Require pull request reviews
-- [ ] Require status checks (`CodeQL`, `Security scan + report (agentic)`, `Dependency Review`)
-- [ ] Require signed commits
-- [ ] Block force pushes
+## Response Targets
 
-## During the demo
+- Acknowledge reports within 2 business days.
+- Triage critical reports within 1 business day.
+- Revoke and rotate any potentially active credential immediately, then investigate use.
+- Set remediation timing from severity, exploitability, exposure, and affected releases.
 
-1. **Probabilistic half** — open the `Security Orchestrator` chatmode, ask it
-   to scan the repo. It will plan, call the six MCPs in
-   [.vscode/mcp.json](.vscode/mcp.json), and produce a clustered report.
-2. **Deterministic half** — run the `Security scan + report (agentic)`
-   workflow from the Actions tab; watch SARIF land in the Security tab.
-3. **Issues filing** — run `Security issues from findings (agentic)`;
-   watch issues appear with the `security`, `auto-triage` labels.
-4. **GHE built-ins** — walk through CodeQL alert → Dependabot PR →
-   Secret Scanning alert → Push Protection block (slide 14).
+## Supported Versions
 
-## Reporting a real vulnerability in the tooling around this repo
+| Component | Supported |
+|---|---|
+| Security tooling on `main` | Yes |
+| `frontend/` and `backend/` demo applications | No; intentionally vulnerable and non-deployable |
+| Older revisions or releases | No |
 
-If you find a vulnerability in the *tooling* (workflows, scripts, agent
-prompts) rather than in the intentional demo code, email
-`security@contoso.example` or open a private security advisory.
+## Disclosure
+
+Coordinate disclosure privately with `@melabadi`. Do not publish details before a fix,
+containment decision, and communication plan are ready.
+
+## Security Exceptions
+
+Use [.github/SECURITY_EXCEPTION.md](.github/SECURITY_EXCEPTION.md) in a private security
+tracking system. Every accepted risk needs an accountable owner, an independent
+approver, a compensating control, a remediation plan, and an expiry date.
+
+## Pre-Demo Control Check
+
+In **Settings > Code security and analysis**, confirm:
+
+- [ ] Advanced CodeQL setup is healthy and default setup is disabled.
+- [ ] Dependency graph, Dependabot alerts, and security updates are enabled.
+- [ ] Secret scanning, push protection, validity checks, and non-provider patterns are enabled.
+- [ ] The custom patterns documented in `.github/secret_scanning.yml` were dry-run and published in repository settings.
+- [ ] Private vulnerability reporting is enabled.
+
+After all checks have completed successfully at least once, confirm the `main` ruleset:
+
+- [ ] Pull requests and an independent approval are required.
+- [ ] Code-owner review and dismissal of stale approvals are required.
+- [ ] Review conversations must be resolved.
+- [ ] `Quality Gate / Validate`, `CodeQL / Analyze (javascript-typescript)`, and `Dependency Review / Dependency Review` are required.
+- [ ] Force pushes and branch deletion are blocked.
+- [ ] Bypass is restricted, justified, and audited.
+
+See [docs/security/OPERATIONS.md](docs/security/OPERATIONS.md) for alert handling and
+[docs/security/ROLLOUT.md](docs/security/ROLLOUT.md) for enforcement status and evidence.
