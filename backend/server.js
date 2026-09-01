@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const sqlite3 = require('sqlite3');
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
@@ -87,10 +87,30 @@ app.get('/api/proxy', async (req, res) => {
   res.status(r.status).send(await r.text());
 });
 
-// VULN: command injection via shell exec
+// Fixed: avoid shell command injection by using an allowlist + execFile
 app.get('/api/admin/exec', (req, res) => {
-  // VULN: no authN/authZ check at all
-  exec(req.query.cmd, (err, stdout, stderr) => {
+  // Note: authN/authZ is still intentionally out of scope for this specific fix.
+  const cmd = String(req.query.cmd || '');
+  const rawArgs = String(req.query.args || '');
+
+  const allowedCommands = {
+    uptime: '/usr/bin/uptime',
+    date: '/bin/date',
+    whoami: '/usr/bin/whoami'
+  };
+
+  const file = allowedCommands[cmd];
+  if (!file) {
+    return res.status(400).type('text/plain').send('command not allowed');
+  }
+
+  const args = rawArgs ? rawArgs.split(',').filter(Boolean) : [];
+  const safeArgPattern = /^[\w.\-/:=]+$/;
+  if (!args.every((a) => safeArgPattern.test(a))) {
+    return res.status(400).type('text/plain').send('invalid args');
+  }
+
+  execFile(file, args, (err, stdout, stderr) => {
     res.type('text/plain').send(stdout + stderr + (err ? err.message : ''));
   });
 });
