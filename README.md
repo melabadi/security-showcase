@@ -38,16 +38,21 @@ disposable teaching artifacts: **do not merge or deploy them.**
 | Capability | Live example | What to show | Expected result |
 |---|---|---|---|
 | Dependabot remediation | [PR #70](https://github.com/melabadi/security-showcase/pull/70) and [evidence](https://github.com/melabadi/security-showcase/pull/70#issuecomment-5486741020) | A bot-authored dependency update proceeding through normal review | Dependency Review and CodeQL pass; compatibility and human review are still required |
-| Code scanning / CodeQL | [PR #72](https://github.com/melabadi/security-showcase/pull/72) and [evidence](https://github.com/melabadi/security-showcase/pull/72#issuecomment-5486740759) | [Critical command injection](https://github.com/melabadi/security-showcase/security/code-scanning/14), [high missing rate limiting](https://github.com/melabadi/security-showcase/security/code-scanning/15), and PR annotations | CodeQL blocks the PR while build and dependency checks pass |
+| Code scanning / CodeQL | [PR #72](https://github.com/melabadi/security-showcase/pull/72), [evidence](https://github.com/melabadi/security-showcase/pull/72#issuecomment-5486740759), and [failing CodeQL check](https://github.com/melabadi/security-showcase/runs/99897052616) | One critical command-injection alert, one high missing-rate-limiting alert, and PR annotations | CodeQL blocks the PR while build and dependency checks pass |
 | Dependency Review | [PR #73](https://github.com/melabadi/security-showcase/pull/73) and [evidence](https://github.com/melabadi/security-showcase/pull/73#issuecomment-5486740905) | A newly introduced direct dependency with a critical advisory | Dependency Review blocks the PR while CodeQL and Quality Gate pass |
 | Secret scanning | [PR #74](https://github.com/melabadi/security-showcase/pull/74) and [evidence](https://github.com/melabadi/security-showcase/pull/74#issuecomment-5486851244) | A synthetic provider-pattern alert in the repository Security view | The secret alert opens even though the Actions checks pass |
 | Copilot Autofix review | [PR #75](https://github.com/melabadi/security-showcase/pull/75) and [evidence](https://github.com/melabadi/security-showcase/pull/75#issuecomment-5486877256) | An Autofix that narrows command injection, followed by deterministic rescan and human review | A new high-severity finding and residual risks keep the proposal from being merge-ready |
-| Repository code quality | [PR #77](https://github.com/melabadi/security-showcase/pull/77) and [evidence](https://github.com/melabadi/security-showcase/pull/77#issuecomment-5493565456) | One harmless unused value, the failing ESLint annotation, and [CodeQL quality note #17](https://github.com/melabadi/security-showcase/security/code-scanning/17) | `Code Quality / Lint` fails alone; build, Dependency Review, and PR security status pass |
+| Repository code quality | [PR #77](https://github.com/melabadi/security-showcase/pull/77), [evidence](https://github.com/melabadi/security-showcase/pull/77#issuecomment-5493565456), and [CodeQL PR check](https://github.com/melabadi/security-showcase/runs/99898147432) | One harmless unused value, the failing ESLint annotation, and one nonblocking CodeQL quality note | `Code Quality / Lint` fails alone; build, Dependency Review, and PR security status pass |
 | Push protection | No PR by design; use the [safe drill procedure](docs/security/OPERATIONS.md#safe-drills) | A normal push rejected before the synthetic provider credential reaches GitHub history | No bypass, remote branch, or pull request is created |
 
 Suggested flow: start with #70 versus #73 for dependency remediation and prevention,
 then show #72, #75, #74, and #77. Finish with push protection because its successful
 outcome is the absence of a remote branch or pull request.
+
+> **Alert access:** GitHub security-alert detail pages are permission-gated and may
+> return 404 unless the signed-in account can read that repository's security alerts.
+> The links above default to public PR comments and check runs. Authorized presenters
+> can open the underlying findings from **Security and quality**.
 
 The repository delivery baseline also includes reproducible build and code-quality
 gates, immutable action pins, CODEOWNERS, private vulnerability reporting,
@@ -200,7 +205,7 @@ product, whose managed PR check is named `CodeQL - Code Quality / Analyze`.
 [Draft PR #77](https://github.com/melabadi/security-showcase/pull/77) demonstrates
 the lint check rejecting one harmless unused value while the build and PR security
 status checks pass. The existing CodeQL `security-and-quality` suite also records a
-nonblocking [quality note](https://github.com/melabadi/security-showcase/security/code-scanning/17).
+nonblocking quality note in the [public PR check](https://github.com/melabadi/security-showcase/runs/99898147432).
 See [Live demo examples](#live-demo-examples) for the complete security and quality
 demonstration set.
 
