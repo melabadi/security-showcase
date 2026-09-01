@@ -51,7 +51,7 @@ and must not be treated as a healthy production baseline.
 | CodeQL default setup | Disabled/not configured | Exactly one setup retained |
 | Dependency Review | Configured | Previous `main` run failed; new pinned workflow must pass on this PR |
 | Quality Gate | Configured on feature branch | Local equivalent passed; GitHub check pending |
-| Code Quality lint gate | Configured on feature branch | Local `npm run lint` passed; `Code Quality / Lint` check pending |
+| Code Quality lint gate | Configured and proven | [Baseline run](https://github.com/melabadi/security-showcase/actions/runs/33504359549) passed; [PR #77](https://github.com/melabadi/security-showcase/pull/77) fails on one harmless unused value |
 | Secret scanning | Enabled | Negative synthetic-secret drill pending |
 | Push protection | Enabled | Negative synthetic-secret drill pending |
 | Validity checks | Disabled | No supported repository REST write field was available |
@@ -94,8 +94,6 @@ Do not require a status check until it has completed successfully at least once.
   Dependency Review blocks it, then update to a patched version.
 - Add an inert CodeQL fixture on a disposable branch and prove the expected alert and
   merge block, then remove it and verify the alert closes.
-- Add a harmless unused value on a disposable branch and prove `Code Quality / Lint`
-  fails, then remove it and verify the check passes.
 - Submit a benign private vulnerability report and verify private routing.
 - Trigger a benign audited setting event and verify its source evidence and approved
   audit destination.
@@ -110,7 +108,7 @@ Do not require a status check until it has completed successfully at least once.
 | Dependency graph and Dependabot | `@melabadi` | `.github/dependabot.yml` | Pending | Enabled/configured | None |
 | Dependency Review | `@melabadi` | `.github/workflows/dependency-review.yml` | Pending | Configured | None |
 | CI quality gate | `@melabadi` | `.github/workflows/quality-gate.yml` | Pending | Local pass | No automated test suite |
-| Code quality lint gate | `@melabadi` | `.github/workflows/code-quality.yml`, `eslint.config.mjs` | Pending | Local pass | Native GitHub Code Quality unavailable here |
+| Code quality lint gate | `@melabadi` | `.github/workflows/code-quality.yml`, `eslint.config.mjs` | [PR #77](https://github.com/melabadi/security-showcase/pull/77) | Proven | Native GitHub Code Quality unavailable here |
 | Ruleset and CODEOWNERS | `@melabadi` | `.github/CODEOWNERS` | Pending | Blocked | Independent reviewer required |
 | Deployment protection | `@melabadi` | `SECURITY.md` | Not applicable | Deployment prohibited | None |
 | Audit and SIEM | `@melabadi` | Not configured | Pending | Blocked | Destination and retention required |
