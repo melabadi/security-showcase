@@ -29,9 +29,10 @@ accountable reviewer before activating pull-request or code-owner enforcement.
 |---|---|
 | `npm ci --prefix frontend` | Pass; npm reported 11 known audit findings |
 | `npm ci --prefix backend` | Pass; npm reported 22 known audit findings |
+| `npm ci --ignore-scripts` | Pass; installs repository quality tooling with 0 known audit findings |
+| `npm run lint` | Pass; ESLint reported 0 errors and 0 warnings |
 | `node --check backend/server.js` | Pass |
 | `npm run build --prefix frontend` | Pass |
-| Lint suite | Not configured |
 | Unit/integration suite | Not configured |
 | End-to-end gate | Not applicable to merge; local red-team journeys are isolated demo activity |
 
@@ -45,11 +46,12 @@ and must not be treated as a healthy production baseline.
 | Private vulnerability reporting | Enabled by REST API | Negative intake drill pending |
 | Dependency graph and Dependabot alerts | Enabled by REST API | 133 open alerts: 2 critical, 59 high, 61 medium, 11 low |
 | Dependabot security updates | Enabled by REST API | Update PR behavior pending |
-| Dependabot version updates | Configured | Two daily npm entries and one weekly Actions entry |
+| Dependabot version updates | Configured | Two daily application npm entries, plus weekly root npm and Actions entries |
 | CodeQL advanced setup | Configured | Last `main` run before this change succeeded; 13 open alerts: 3 critical, 9 high, 1 medium |
 | CodeQL default setup | Disabled/not configured | Exactly one setup retained |
 | Dependency Review | Configured | Previous `main` run failed; new pinned workflow must pass on this PR |
 | Quality Gate | Configured on feature branch | Local equivalent passed; GitHub check pending |
+| Code Quality lint gate | Configured and proven | [Baseline run](https://github.com/melabadi/security-showcase/actions/runs/33504359549) passed; [PR #77](https://github.com/melabadi/security-showcase/pull/77) fails on one harmless unused value |
 | Secret scanning | Enabled | Negative synthetic-secret drill pending |
 | Push protection | Enabled | Negative synthetic-secret drill pending |
 | Validity checks | Disabled | No supported repository REST write field was available |
@@ -73,8 +75,8 @@ Do not require a status check until it has completed successfully at least once.
 1. Add an independent maintainer or move the repository into an organization with
    distinct application, AppSec, and platform/release owners.
 2. Run this implementation through a pull request and verify these exact checks:
-   `Quality Gate / Validate`, `CodeQL / Analyze (javascript-typescript)`, and
-   `Dependency Review / Dependency Review`.
+  `Quality Gate / Validate`, `Code Quality / Lint`,
+  `CodeQL / Analyze (javascript-typescript)`, and `Dependency Review / Dependency Review`.
 3. Create an active `main` ruleset requiring pull requests, independent approval,
    code-owner review, stale-approval dismissal, latest-push approval, resolved review
    conversations, and the successful checks above.
@@ -106,6 +108,7 @@ Do not require a status check until it has completed successfully at least once.
 | Dependency graph and Dependabot | `@melabadi` | `.github/dependabot.yml` | Pending | Enabled/configured | None |
 | Dependency Review | `@melabadi` | `.github/workflows/dependency-review.yml` | Pending | Configured | None |
 | CI quality gate | `@melabadi` | `.github/workflows/quality-gate.yml` | Pending | Local pass | No automated test suite |
+| Code quality lint gate | `@melabadi` | `.github/workflows/code-quality.yml`, `eslint.config.mjs` | [PR #77](https://github.com/melabadi/security-showcase/pull/77) | Proven | Native GitHub Code Quality unavailable here |
 | Ruleset and CODEOWNERS | `@melabadi` | `.github/CODEOWNERS` | Pending | Blocked | Independent reviewer required |
 | Deployment protection | `@melabadi` | `SECURITY.md` | Not applicable | Deployment prohibited | None |
 | Audit and SIEM | `@melabadi` | Not configured | Pending | Blocked | Destination and retention required |

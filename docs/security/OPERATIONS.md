@@ -31,11 +31,13 @@ deterministic scanner or advisory source returned them.
 ## Pull Requests
 
 - Use a scoped issue or change record with acceptance criteria.
-- Run `npm ci --prefix frontend`, `npm ci --prefix backend`,
-  `node --check backend/server.js`, and `npm run build --prefix frontend`.
-- Require `Quality Gate / Validate`, `CodeQL / Analyze (javascript-typescript)`, and
-  `Dependency Review / Dependency Review` after those checks have succeeded on the
-  repository and are activated in the `main` ruleset.
+- Run `npm ci --ignore-scripts`, `npm run lint`, `npm ci --prefix frontend`,
+  `npm ci --prefix backend`, `node --check backend/server.js`, and
+  `npm run build --prefix frontend`.
+- Require `Quality Gate / Validate`, `Code Quality / Lint`,
+  `CodeQL / Analyze (javascript-typescript)`, and `Dependency Review / Dependency Review`
+  after those checks have succeeded on the repository and are activated in the
+  `main` ruleset.
 - Require review by a person other than the author. An agent, bot, or the author cannot
   be the only approver.
 - Explain any added, changed, or removed teaching vulnerability in the pull request.
