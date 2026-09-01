@@ -176,6 +176,9 @@ gh aw compile                        # regenerates the .lock.yml files
 `Code Quality / Lint` is a repository-owned ESLint check. It is intentionally
 distinct from the separately licensed [GitHub Code Quality](https://docs.github.com/en/code-security/concepts/code-quality/code-quality)
 product, whose managed PR check is named `CodeQL - Code Quality / Analyze`.
+[Draft PR #77](https://github.com/melabadi/security-showcase/pull/77) demonstrates
+the lint check rejecting one harmless unused value while the build and security
+checks pass.
 
 Configured checks are not merge-enforced yet. The repository currently has only
 one maintainer; [the rollout record](docs/security/ROLLOUT.md) keeps ruleset
