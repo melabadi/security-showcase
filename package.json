@@ -1,0 +1,13 @@
+{
+  "name": "security-showcase-tooling",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Repository-level quality tooling for the intentionally vulnerable security showcase.",
+  "scripts": {
+    "lint": "eslint backend frontend/src --max-warnings 0"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.5.0"
+  }
+}

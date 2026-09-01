@@ -58,7 +58,7 @@ After all checks have completed successfully at least once, confirm the `main` r
 - [ ] Pull requests and an independent approval are required.
 - [ ] Code-owner review and dismissal of stale approvals are required.
 - [ ] Review conversations must be resolved.
-- [ ] `Quality Gate / Validate`, `CodeQL / Analyze (javascript-typescript)`, and `Dependency Review / Dependency Review` are required.
+- [ ] `Quality Gate / Validate`, `Code Quality / Lint`, `CodeQL / Analyze (javascript-typescript)`, and `Dependency Review / Dependency Review` are required.
 - [ ] Force pushes and branch deletion are blocked.
 - [ ] Bypass is restricted, justified, and audited.
 

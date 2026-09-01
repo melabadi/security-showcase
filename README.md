@@ -6,7 +6,8 @@
 > **DO NOT DEPLOY.** Every file in `frontend/` and `backend/` contains at
 > least one deliberate vulnerability so CodeQL, Semgrep, Snyk, Trivy,
 > Dependabot, Secret Scanning, Push Protection, and the custom security
-> agent have something to find on stage.
+> agent have something to find on stage. ESLint is a separate quality gate
+> that passes on the documented teaching baseline.
 
 ---
 
@@ -27,9 +28,9 @@ Mapped 1:1 to the deck slides:
 | 13    | Push protection                       | Enabled in repo settings (documented in [SECURITY.md](SECURITY.md))      |
 | 15    | Layered SDLC story                    | All of the above together                                                |
 
-The repository delivery baseline also includes a reproducible quality gate,
-immutable action pins, CODEOWNERS, private vulnerability reporting, expiring
-security exceptions, and an evidence-based rollout record. See
+The repository delivery baseline also includes reproducible build and code-quality
+gates, immutable action pins, CODEOWNERS, private vulnerability reporting,
+expiring security exceptions, and an evidence-based rollout record. See
 [docs/security/ROLLOUT.md](docs/security/ROLLOUT.md) for current enforcement
 status and [docs/security/OPERATIONS.md](docs/security/OPERATIONS.md) for the
 maintainer runbook.
@@ -40,6 +41,8 @@ maintainer runbook.
 
 ```
 .
+├── package.json                  # Repository-level ESLint tooling
+├── eslint.config.mjs             # Backend and frontend quality rules
 ├── frontend/                     # React + Vite (intentionally vulnerable)
 ├── backend/                      # Node/Express mock API (intentionally vulnerable)
 ├── .vscode/
@@ -63,6 +66,7 @@ maintainer runbook.
 │   │   └── secure-javascript.instructions.md
 │   └── workflows/
 │       ├── codeql.yml                              # Slide 10
+│       ├── code-quality.yml                        # Repository-owned ESLint gate
 │       ├── dependency-review.yml                   # Slide 11
 │       ├── quality-gate.yml                        # Reproducible install/check/build gate
 │       ├── security-scan-report.md                 # Agentic workflow #1 (source)
@@ -161,12 +165,17 @@ gh aw compile                        # regenerates the .lock.yml files
 | Control           | Status     | Config file                                                        |
 | ----------------- | ---------- | ------------------------------------------------------------------ |
 | Quality Gate      | Configured | [.github/workflows/quality-gate.yml](.github/workflows/quality-gate.yml) |
+| Code Quality      | Configured | [.github/workflows/code-quality.yml](.github/workflows/code-quality.yml) and [eslint.config.mjs](eslint.config.mjs) |
 | CodeQL            | Configured | [.github/workflows/codeql.yml](.github/workflows/codeql.yml)     |
 | Dependabot        | Enabled    | [.github/dependabot.yml](.github/dependabot.yml)                 |
 | Dependency Review | Configured | [.github/workflows/dependency-review.yml](.github/workflows/dependency-review.yml) |
 | Secret Scanning   | Enabled    | [.github/secret_scanning.yml](.github/secret_scanning.yml)       |
 | Push Protection   | Enabled    | See [SECURITY.md](SECURITY.md)                                    |
 | Private Reporting | Enabled    | See [SECURITY.md](SECURITY.md)                                    |
+
+`Code Quality / Lint` is a repository-owned ESLint check. It is intentionally
+distinct from the separately licensed [GitHub Code Quality](https://docs.github.com/en/code-security/concepts/code-quality/code-quality)
+product, whose managed PR check is named `CodeQL - Code Quality / Analyze`.
 
 Configured checks are not merge-enforced yet. The repository currently has only
 one maintainer; [the rollout record](docs/security/ROLLOUT.md) keeps ruleset
