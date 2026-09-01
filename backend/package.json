@@ -17,5 +17,8 @@
     "lodash": "4.17.20",
     "axios": "0.21.1",
     "node-fetch": "2.6.1"
+  },
+  "devDependencies": {
+    "minimist": "0.0.8"
   }
 }
