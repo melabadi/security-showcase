@@ -177,8 +177,9 @@ gh aw compile                        # regenerates the .lock.yml files
 distinct from the separately licensed [GitHub Code Quality](https://docs.github.com/en/code-security/concepts/code-quality/code-quality)
 product, whose managed PR check is named `CodeQL - Code Quality / Analyze`.
 [Draft PR #77](https://github.com/melabadi/security-showcase/pull/77) demonstrates
-the lint check rejecting one harmless unused value while the build and security
-checks pass.
+the lint check rejecting one harmless unused value while the build and PR security
+status checks pass. The existing CodeQL `security-and-quality` suite also records a
+nonblocking [quality note](https://github.com/melabadi/security-showcase/security/code-scanning/17).
 
 Configured checks are not merge-enforced yet. The repository currently has only
 one maintainer; [the rollout record](docs/security/ROLLOUT.md) keeps ruleset
