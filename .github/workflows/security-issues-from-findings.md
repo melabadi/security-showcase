@@ -2,7 +2,7 @@
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: [ "Security scan + report" ]
+    workflows: [ "Agentic workflow #1 — Security scan + report" ]
     types: [ completed ]
     branches: [ main ]
 
@@ -50,7 +50,7 @@ workflow into GitHub issues — one per finding cluster.
   the bash tool and the `gh` CLI:
   ```
   gh run list --workflow=security-scan-report.lock.yml --status success --limit 1
-  gh run download <run-id> --name safe_output_assets
+  gh run download <run-id> --name safe-outputs-assets
   ```
   Then read the markdown file under the downloaded directory.
 - You may also confirm findings directly against the `github` code-security

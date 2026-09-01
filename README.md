@@ -27,6 +27,13 @@ Mapped 1:1 to the deck slides:
 | 13    | Push protection                       | Enabled in repo settings (documented in [SECURITY.md](SECURITY.md))      |
 | 15    | Layered SDLC story                    | All of the above together                                                |
 
+The repository delivery baseline also includes a reproducible quality gate,
+immutable action pins, CODEOWNERS, private vulnerability reporting, expiring
+security exceptions, and an evidence-based rollout record. See
+[docs/security/ROLLOUT.md](docs/security/ROLLOUT.md) for current enforcement
+status and [docs/security/OPERATIONS.md](docs/security/OPERATIONS.md) for the
+maintainer runbook.
+
 ---
 
 ## Repository layout
@@ -39,7 +46,10 @@ Mapped 1:1 to the deck slides:
 │   └── mcp.json                  # Hosted MCP servers (no tokens, no CLIs)
 ├── .github/
 │   ├── copilot-instructions.md   # Repo-wide guardrails for Copilot
+│   ├── CODEOWNERS                # Ownership; independent review is a documented blocker
 │   ├── dependabot.yml            # Slide 11
+│   ├── pull_request_template.md  # Risk, AI provenance, and validation evidence
+│   ├── SECURITY_EXCEPTION.md     # Private, expiring exception record template
 │   ├── secret_scanning.yml       # Slide 12 custom patterns
 │   ├── agents/
 │   │   ├── agentic-workflows.agent.md      # gh-aw dispatcher agent
@@ -54,6 +64,7 @@ Mapped 1:1 to the deck slides:
 │   └── workflows/
 │       ├── codeql.yml                              # Slide 10
 │       ├── dependency-review.yml                   # Slide 11
+│       ├── quality-gate.yml                        # Reproducible install/check/build gate
 │       ├── security-scan-report.md                 # Agentic workflow #1 (source)
 │       ├── security-scan-report.lock.yml           # Compiled by `gh aw compile`
 │       ├── security-issues-from-findings.md        # Agentic workflow #2 (source)
@@ -149,10 +160,18 @@ gh aw compile                        # regenerates the .lock.yml files
 
 | Control           | Status     | Config file                                                        |
 | ----------------- | ---------- | ------------------------------------------------------------------ |
-| CodeQL            | Enabled    | [.github/workflows/codeql.yml](.github/workflows/codeql.yml)     |
+| Quality Gate      | Configured | [.github/workflows/quality-gate.yml](.github/workflows/quality-gate.yml) |
+| CodeQL            | Configured | [.github/workflows/codeql.yml](.github/workflows/codeql.yml)     |
 | Dependabot        | Enabled    | [.github/dependabot.yml](.github/dependabot.yml)                 |
-| Secret Scanning   | Enable in repo settings | [.github/secret_scanning.yml](.github/secret_scanning.yml) |
-| Push Protection   | Enable in repo settings | See [SECURITY.md](SECURITY.md)                         |
+| Dependency Review | Configured | [.github/workflows/dependency-review.yml](.github/workflows/dependency-review.yml) |
+| Secret Scanning   | Enabled    | [.github/secret_scanning.yml](.github/secret_scanning.yml)       |
+| Push Protection   | Enabled    | See [SECURITY.md](SECURITY.md)                                    |
+| Private Reporting | Enabled    | See [SECURITY.md](SECURITY.md)                                    |
+
+Configured checks are not merge-enforced yet. The repository currently has only
+one maintainer; [the rollout record](docs/security/ROLLOUT.md) keeps ruleset
+activation blocked until independent review exists and each check has passed at
+least once.
 
 ---
 
