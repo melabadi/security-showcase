@@ -1,0 +1,12 @@
+# This personal repository currently has one maintainer. These entries establish
+# ownership, but independent review remains blocked until another reviewer joins.
+* @melabadi
+
+/.github/workflows/ @melabadi
+/.github/dependabot.yml @melabadi
+/.github/CODEOWNERS @melabadi
+/.github/SECURITY_EXCEPTION.md @melabadi
+/SECURITY.md @melabadi
+/docs/security/ @melabadi
+/backend/ @melabadi
+/frontend/ @melabadi
