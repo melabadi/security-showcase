@@ -10,16 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "0.21.1",
-    "lodash": "4.17.20",
-    "marked": "0.3.6",
+    "axios": "0.33.0",
+    "lodash": "4.18.1",
+    "marked": "0.3.17",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "6.3.0",
-    "jsonwebtoken": "8.5.1"
+    "react-router-dom": "7.18.3",
+    "jsonwebtoken": "9.0.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "4.2.1",
-    "vite": "4.5.0"
+    "@vitejs/plugin-react": "4.7.0",
+    "vite": "8.2.2"
   }
 }
